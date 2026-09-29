@@ -1,91 +1,67 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<title>咪咪大神的柴薪銀</title>
+<title>薪資計算器</title>
 
 <style>
 * {
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
     margin: 0;
-    background: #f7f7f7;
-    color: #222;
+    padding: 0;
     font-family:
         -apple-system,
         BlinkMacSystemFont,
         "PingFang TC",
-        "Noto Sans TC",
+        "Microsoft JhengHei",
         sans-serif;
+    background: #f5f1eb;
+    color: #333;
 }
 
-main {
-    max-width: 520px;
+.container {
+    width: 100%;
+    max-width: 600px;
     margin: auto;
-    padding: 16px 15px 38px;
-    position: relative;
-    min-height: 100vh;
+    padding: 18px 14px 40px;
 }
 
 h1 {
-    font-size: 25px;
-    margin: 5px 0 14px;
-}
-
-nav {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 7px;
-}
-
-button {
-    border: 0;
-    border-radius: 12px;
-    padding: 12px;
-    font-size: 16px;
-    font-weight: 600;
-    background: #222;
-    color: #fff;
-}
-
-nav button {
-    font-size: 14px;
-    padding: 10px;
-}
-
-nav button.on {
-    background: #555;
+    text-align: center;
+    margin: 8px 0 20px;
+    font-size: 28px;
+    color: #5b4636;
 }
 
 .card {
-    background: #fff;
-    border-radius: 17px;
-    padding: 17px;
-    margin-top: 12px;
-    box-shadow: 0 2px 10px #0000000b;
+    background: white;
+    border-radius: 18px;
+    padding: 18px;
+    margin-bottom: 16px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
 }
 
 label {
     display: block;
-    font-size: 14px;
-    color: #666;
-    margin: 9px 0 5px;
+    margin-top: 12px;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #5b4636;
 }
 
 input {
     width: 100%;
     padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 11px;
-    font: inherit;
-    background: #fff;
+    border: 1px solid #d8cec3;
+    border-radius: 10px;
+    font-size: 17px;
+    background: #fffdfb;
 }
 
 .row {
@@ -97,841 +73,1111 @@ input {
     flex: 1;
 }
 
-.big {
-    font-size: 24px;
-    font-weight: 700;
-    margin-top: 3px;
+button {
+    border: none;
+    border-radius: 12px;
+    padding: 13px 16px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.muted {
-    font-size: 13px;
+.primary {
+    width: 100%;
+    margin-top: 18px;
+    background: #7b5e48;
+    color: white;
+}
+
+.primary:active {
+    transform: scale(0.98);
+}
+
+.settle {
+    width: 100%;
+    margin-top: 10px;
+    background: #d49a55;
+    color: white;
+}
+
+.summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.summaryBox {
+    background: #f7f2ec;
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+}
+
+.summaryTitle {
+    font-size: 14px;
     color: #777;
 }
 
-.item {
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
+.summaryValue {
+    margin-top: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #5b4636;
 }
 
-.total {
+.record {
+    border: 1px solid #e1d8cf;
+    border-radius: 13px;
+    padding: 13px;
+    margin-top: 10px;
+    background: #fffdfa;
+}
+
+.recordHeader {
     display: flex;
     justify-content: space-between;
-    font-weight: 700;
+    align-items: center;
+    gap: 8px;
+}
+
+.recordDate {
+    font-weight: bold;
+    color: #5b4636;
+}
+
+.deleteBtn {
+    background: #eee;
+    color: #c0392b;
+    padding: 7px 10px;
+    font-size: 14px;
+}
+
+.month {
+    border: 1px solid #ded4ca;
+    border-radius: 15px;
+    padding: 15px;
     margin-top: 12px;
+    background: white;
 }
 
-.hidden {
-    display: none;
+.monthHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
 }
 
-.art {
-    position: fixed;
-    right: -18px;
-    bottom: -8px;
-    width: 105px;
-    opacity: .95;
-    pointer-events: none;
-    z-index: 0;
+.monthTitle {
+    font-size: 19px;
+    font-weight: bold;
+    color: #5b4636;
 }
 
-.content {
-    position: relative;
-    z-index: 1;
-    padding-bottom: 95px;
+.deleteMonthBtn {
+    background: #f1eeee;
+    color: #c0392b;
+    padding: 8px 10px;
+    font-size: 14px;
+}
+
+.monthInfo {
+    margin-top: 12px;
+    line-height: 1.8;
+}
+
+.empty {
+    text-align: center;
+    color: #888;
+    padding: 20px 5px;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 15px 0;
+}
+
+.notice {
+    background: #fff6df;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+    color: #775b2e;
+    font-size: 14px;
 }
 </style>
 </head>
 
 <body>
 
-<main>
+<div class="container">
 
-<div class="content">
+    <h1>💰 薪資計算器</h1>
 
-<h1>咪咪大神的柴薪銀</h1>
+    <!-- 輸入區 -->
+    <div class="card">
 
-<nav>
-    <button id="bn1" onclick="page('input')">
-        輸入資料
-    </button>
+        <label for="hourlyRate">時薪</label>
+        <input
+            id="hourlyRate"
+            type="number"
+            min="0"
+            step="1"
+            placeholder="例如：200"
+        >
 
-    <button id="bn2" onclick="page('settle')">
-        本月結算
-    </button>
+        <label for="workDate">日期</label>
+        <input id="workDate" type="date">
 
-    <button id="bn3" onclick="page('history')">
-        每月紀錄
-    </button>
-</nav>
+        <div class="row">
+            <div>
+                <label for="startTime">上班時間</label>
+                <input id="startTime" type="time">
+            </div>
 
+            <div>
+                <label for="endTime">下班時間</label>
+                <input id="endTime" type="time">
+            </div>
+        </div>
 
-<!-- =========================
-     輸入資料
-========================= -->
+        <div class="summary">
 
-<section id="input" class="card">
+            <div class="summaryBox">
+                <div class="summaryTitle">工作時間</div>
+                <div class="summaryValue" id="workHours">0 小時 0 分</div>
+            </div>
 
-<h2>輸入資料</h2>
+            <div class="summaryBox">
+                <div class="summaryTitle">本筆薪資</div>
+                <div class="summaryValue" id="workPay">$0</div>
+            </div>
 
-<label>時薪</label>
+        </div>
 
-<input
-    id="rate"
-    type="number"
-    min="0"
-    step="1"
-    placeholder="例如 200"
->
+        <label for="actualPay">實收金額</label>
+        <input
+            id="actualPay"
+            type="number"
+            min="0"
+            step="1"
+            placeholder="可自行輸入實際收到的金額"
+        >
 
+        <button class="primary" onclick="addRecord()">
+            ＋ 新增這筆
+        </button>
 
-<label>日期</label>
+        <button class="settle" onclick="settleCurrentMonth()">
+            ✅ 手動結算本月
+        </button>
 
-<input
-    id="date"
-    type="date"
->
+        <div class="notice">
+            資料會自動儲存在這台手機的瀏覽器中。
+        </div>
 
-
-<div class="row">
-
-<div>
-
-<label>上班時間</label>
-
-<input
-    id="start"
-    type="time"
->
-
-</div>
-
-
-<div>
-
-<label>下班時間</label>
-
-<input
-    id="end"
-    type="time"
->
-
-</div>
-
-</div>
+    </div>
 
 
-<div
-    class="card"
-    style="background:#f7f7f7;margin-top:14px"
->
+    <!-- 本月資料 -->
+    <div class="card">
 
-<div class="muted">
-    本次工時
-</div>
+        <h2>📊 本月統計</h2>
 
-<div
-    class="big"
-    id="duration"
->
-    0 小時 0 分
-</div>
+        <div class="summary">
 
-<div
-    class="muted"
-    id="decimal"
->
-    0 小時
-</div>
+            <div class="summaryBox">
+                <div class="summaryTitle">累計工時</div>
+                <div class="summaryValue" id="monthHours">
+                    0 小時 0 分
+                </div>
+            </div>
 
-</div>
+            <div class="summaryBox">
+                <div class="summaryTitle">應得薪資</div>
+                <div class="summaryValue" id="monthPay">
+                    $0
+                </div>
+            </div>
 
+            <div class="summaryBox">
+                <div class="summaryTitle">實收金額</div>
+                <div class="summaryValue" id="monthActual">
+                    $0
+                </div>
+            </div>
 
-<button onclick="addWork()">
-    加入本月工時
-</button>
+            <div class="summaryBox">
+                <div class="summaryTitle">筆數</div>
+                <div class="summaryValue" id="monthCount">
+                    0
+                </div>
+            </div>
 
+        </div>
 
-<div id="list"></div>
+        <div id="currentRecords"></div>
 
-
-<div class="total">
-
-<span>
-    本月總工時
-</span>
-
-<span id="hours">
-    0 小時
-</span>
-
-</div>
+    </div>
 
 
-<div class="total">
+    <!-- 每月紀錄 -->
+    <div class="card">
 
-<span>
-    目前應得薪資
-</span>
+        <h2>📅 每月結算紀錄</h2>
 
-<span id="pay">
-    $0
-</span>
+        <div id="monthlyRecords"></div>
+
+    </div>
 
 </div>
-
-</section>
-
-
-
-<!-- =========================
-     本月結算
-========================= -->
-
-<section
-    id="settle"
-    class="card hidden"
->
-
-<h2>本月結算</h2>
-
-<div
-    class="muted"
-    id="sm"
-></div>
-
-
-<div class="total">
-
-<span>
-    總工時
-</span>
-
-<span id="sh">
-    0
-</span>
-
-</div>
-
-
-<div class="total">
-
-<span>
-    計算薪資
-</span>
-
-<span id="sp">
-    $0
-</span>
-
-</div>
-
-
-<label>
-    實收金額
-</label>
-
-<input
-    id="received"
-    type="number"
-    min="0"
-    step="1"
-    placeholder="輸入實際收到的金額"
->
-
-
-<button onclick="settle()">
-    結算本月
-</button>
-
-
-<p class="muted">
-    由你自己按「結算」，不會自動結算。
-</p>
-
-</section>
-
-
-
-<!-- =========================
-     每月紀錄
-========================= -->
-
-<section
-    id="history"
-    class="card hidden"
->
-
-<h2>
-    每月結算紀錄
-</h2>
-
-<div
-    id="hist"
-    class="muted"
->
-    尚無紀錄
-</div>
-
-</section>
-
-</div>
-
-
-<!-- =========================
-     右下角人物圖
-========================= -->
-
-<img
-    class="art"
-    src="data:image/jpeg;base64,請將你提供的圖片轉成Base64後放在這裡"
-    alt=""
->
 
 
 <script>
 
-/* =====================================
+/* =========================
    資料儲存
-===================================== */
+========================= */
 
-const KEY = 'mimi_salary_v2';
+const STORAGE_KEY = "salaryCalculatorData";
 
-let db = JSON.parse(
-    localStorage.getItem(KEY)
-    ||
-    '{"months":{}}'
-);
+let data = loadData();
 
 
-/* =====================================
-   今天日期
-===================================== */
+function loadData() {
 
-const today = () => {
-    return new Date()
-        .toISOString()
-        .slice(0,10);
-};
+    try {
 
+        const saved = localStorage.getItem(STORAGE_KEY);
 
-/* =====================================
-   年月
-===================================== */
+        if (!saved) {
+            return {
+                records: [],
+                settlements: []
+            };
+        }
 
-const ym = d => {
-    return d.slice(0,7);
-};
+        const parsed = JSON.parse(saved);
 
+        return {
+            records: Array.isArray(parsed.records)
+                ? parsed.records
+                : [],
 
-/* =====================================
-   取得目前月份
-===================================== */
-
-function current() {
-
-    let m = ym(
-        date.value || today()
-    );
-
-    if (!db.months[m]) {
-
-        db.months[m] = {
-
-            rate:
-                +rate.value || 0,
-
-            works: [],
-
-            settled: false
-
+            settlements: Array.isArray(parsed.settlements)
+                ? parsed.settlements
+                : []
         };
 
-    }
+    } catch (error) {
 
-    return db.months[m];
+        console.error("讀取資料失敗", error);
+
+        return {
+            records: [],
+            settlements: []
+        };
+    }
 }
 
 
-/* =====================================
-   儲存資料
-===================================== */
-
-function save() {
+function saveData() {
 
     localStorage.setItem(
-        KEY,
-        JSON.stringify(db)
+        STORAGE_KEY,
+        JSON.stringify(data)
     );
-
 }
 
 
-/* =====================================
-   計算工時
-===================================== */
+/* =========================
+   預設日期
+========================= */
 
-function durationMin() {
+function setDefaultDate() {
 
-    if (
-        !start.value ||
-        !end.value
-    ) {
+    const dateInput =
+        document.getElementById("workDate");
+
+    if (!dateInput.value) {
+
+        const today = new Date();
+
+        const yyyy = today.getFullYear();
+
+        const mm = String(
+            today.getMonth() + 1
+        ).padStart(2, "0");
+
+        const dd = String(
+            today.getDate()
+        ).padStart(2, "0");
+
+        dateInput.value =
+            `${yyyy}-${mm}-${dd}`;
+    }
+}
+
+
+/* =========================
+   計算工作時間
+========================= */
+
+function calculateMinutes() {
+
+    const start =
+        document.getElementById("startTime").value;
+
+    const end =
+        document.getElementById("endTime").value;
+
+    if (!start || !end) {
         return 0;
     }
 
+    const [startH, startM] =
+        start.split(":").map(Number);
 
-    let a =
-        start.value
-        .split(':')
-        .map(Number);
+    const [endH, endM] =
+        end.split(":").map(Number);
+
+    let startMinutes =
+        startH * 60 + startM;
+
+    let endMinutes =
+        endH * 60 + endM;
+
+    /*
+       如果下班時間比上班時間早，
+       自動視為跨午夜。
+    */
+
+    if (endMinutes < startMinutes) {
+        endMinutes += 24 * 60;
+    }
+
+    return endMinutes - startMinutes;
+}
 
 
-    let b =
-        end.value
-        .split(':')
-        .map(Number);
+function formatMinutes(totalMinutes) {
+
+    const hours =
+        Math.floor(totalMinutes / 60);
+
+    const minutes =
+        totalMinutes % 60;
+
+    return `${hours} 小時 ${minutes} 分`;
+}
 
 
-    let m =
-        b[0] * 60 +
-        b[1] -
-        a[0] * 60 -
-        a[1];
+function calculatePay() {
+
+    const hourlyRate =
+        Number(
+            document.getElementById("hourlyRate").value
+        ) || 0;
+
+    const minutes =
+        calculateMinutes();
+
+    return hourlyRate * minutes / 60;
+}
+
+
+function updateCalculation() {
+
+    const minutes =
+        calculateMinutes();
+
+    const pay =
+        calculatePay();
+
+    document.getElementById("workHours")
+        .textContent =
+        formatMinutes(minutes);
+
+    document.getElementById("workPay")
+        .textContent =
+        "$" + Math.round(pay).toLocaleString();
+}
+
+
+document
+    .getElementById("hourlyRate")
+    .addEventListener(
+        "input",
+        updateCalculation
+    );
+
+document
+    .getElementById("startTime")
+    .addEventListener(
+        "input",
+        updateCalculation
+    );
+
+document
+    .getElementById("endTime")
+    .addEventListener(
+        "input",
+        updateCalculation
+    );
+
+
+/* =========================
+   新增一筆
+========================= */
+
+function addRecord() {
+
+    const hourlyRate =
+        Number(
+            document.getElementById("hourlyRate").value
+        );
+
+    const date =
+        document.getElementById("workDate").value;
+
+    const startTime =
+        document.getElementById("startTime").value;
+
+    const endTime =
+        document.getElementById("endTime").value;
+
+    const actualPay =
+        Number(
+            document.getElementById("actualPay").value
+        ) || 0;
+
+
+    if (!hourlyRate) {
+
+        alert("請輸入時薪");
+
+        return;
+    }
+
+    if (!date) {
+
+        alert("請選擇日期");
+
+        return;
+    }
+
+    if (!startTime || !endTime) {
+
+        alert("請輸入上班與下班時間");
+
+        return;
+    }
+
+
+    const minutes =
+        calculateMinutes();
+
+    if (minutes <= 0) {
+
+        alert("工作時間必須大於 0 分鐘");
+
+        return;
+    }
+
+
+    const pay =
+        hourlyRate * minutes / 60;
+
+
+    const record = {
+
+        id:
+            Date.now().toString(),
+
+        hourlyRate:
+
+            hourlyRate,
+
+        date:
+
+            date,
+
+        startTime:
+
+            startTime,
+
+        endTime:
+
+            endTime,
+
+        minutes:
+
+            minutes,
+
+        pay:
+
+            Math.round(pay),
+
+        actualPay:
+
+            actualPay
+
+    };
+
+
+    data.records.push(record);
+
+    saveData();
+
+    clearInputs();
+
+    renderAll();
+
+    alert("已新增這筆資料");
+}
+
+
+/* =========================
+   清除輸入
+========================= */
+
+function clearInputs() {
+
+    document.getElementById(
+        "startTime"
+    ).value = "";
+
+    document.getElementById(
+        "endTime"
+    ).value = "";
+
+    document.getElementById(
+        "actualPay"
+    ).value = "";
+
+    updateCalculation();
+}
+
+
+/* =========================
+   刪除單筆
+========================= */
+
+function deleteRecord(id) {
+
+    const record =
+        data.records.find(
+            item => item.id === id
+        );
+
+    if (!record) {
+        return;
+    }
+
+
+    const ok =
+        confirm(
+            `確定要刪除 ${record.date} 這筆資料嗎？`
+        );
+
+    if (!ok) {
+        return;
+    }
+
+
+    data.records =
+        data.records.filter(
+            item => item.id !== id
+        );
+
+
+    saveData();
+
+    renderAll();
+}
+
+
+/* =========================
+   月份工具
+========================= */
+
+function getMonth(date) {
+
+    return date.substring(0, 7);
+}
+
+
+function formatMonth(month) {
+
+    const parts =
+        month.split("-");
+
+    return `${parts[0]} 年 ${Number(parts[1])} 月`;
+}
+
+
+/* =========================
+   目前月份
+========================= */
+
+function getCurrentSelectedMonth() {
+
+    const date =
+        document.getElementById(
+            "workDate"
+        ).value;
+
+    if (!date) {
+
+        const now = new Date();
+
+        return `${now.getFullYear()}-${String(
+            now.getMonth() + 1
+        ).padStart(2, "0")}`;
+
+    }
+
+    return getMonth(date);
+}
+
+
+/* =========================
+   取得月份資料
+========================= */
+
+function getMonthRecords(month) {
+
+    return data.records.filter(
+        record =>
+            getMonth(record.date) === month
+    );
+}
+
+
+/* =========================
+   統計月份
+========================= */
+
+function calculateMonth(month) {
+
+    const records =
+        getMonthRecords(month);
+
+
+    let totalMinutes = 0;
+
+    let totalPay = 0;
+
+    let totalActual = 0;
+
+
+    records.forEach(record => {
+
+        totalMinutes +=
+            Number(record.minutes) || 0;
+
+        totalPay +=
+            Number(record.pay) || 0;
+
+        totalActual +=
+            Number(record.actualPay) || 0;
+
+    });
+
+
+    return {
+
+        records,
+
+        totalMinutes,
+
+        totalPay,
+
+        totalActual
+
+    };
+}
+
+
+/* =========================
+   顯示本月
+========================= */
+
+function renderCurrentMonth() {
+
+    const month =
+        getCurrentSelectedMonth();
+
+    const result =
+        calculateMonth(month);
+
+
+    document.getElementById(
+        "monthHours"
+    ).textContent =
+        formatMinutes(
+            result.totalMinutes
+        );
+
+
+    document.getElementById(
+        "monthPay"
+    ).textContent =
+        "$" +
+        Math.round(
+            result.totalPay
+        ).toLocaleString();
+
+
+    document.getElementById(
+        "monthActual"
+    ).textContent =
+        "$" +
+        Math.round(
+            result.totalActual
+        ).toLocaleString();
+
+
+    document.getElementById(
+        "monthCount"
+    ).textContent =
+        result.records.length;
+
+
+    const container =
+        document.getElementById(
+            "currentRecords"
+        );
+
+
+    if (result.records.length === 0) {
+
+        container.innerHTML =
+            `<div class="empty">
+                本月目前沒有工作紀錄
+             </div>`;
+
+        return;
+    }
 
 
     /*
-       如果跨午夜
-       自動加一天
+       日期由新到舊
     */
 
-    if (m < 0) {
-
-        m += 1440;
-
-    }
-
-
-    return m;
-}
-
-
-/* =====================================
-   顯示本次工時
-===================================== */
-
-function update() {
-
-    let m =
-        durationMin();
-
-
-    duration.textContent =
-        Math.floor(m / 60)
-        +
-        ' 小時 '
-        +
-        (m % 60)
-        +
-        ' 分';
-
-
-    decimal.textContent =
-        (m / 60).toFixed(2)
-        +
-        ' 小時';
-
-}
-
-
-/* =====================================
-   更新畫面
-===================================== */
-
-function refresh() {
-
-    let a =
-        current();
-
-
-    let m =
-        ym(date.value);
-
-
-    let mins =
-        a.works.reduce(
-            (s,x) =>
-                s + x.minutes,
-            0
+    const records =
+        [...result.records].sort(
+            (a, b) =>
+                b.date.localeCompare(a.date)
         );
 
 
-    let h =
-        mins / 60;
+    container.innerHTML =
+        records.map(
+            record => `
 
+            <div class="record">
 
-    let p =
-        Math.round(
-            h * a.rate
-        );
+                <div class="recordHeader">
 
+                    <div class="recordDate">
+                        📅 ${record.date}
+                    </div>
 
-    /* 工作紀錄 */
+                    <button
+                        class="deleteBtn"
+                        onclick="deleteRecord('${record.id}')"
+                    >
+                        🗑️ 刪除這筆
+                    </button>
 
-    list.innerHTML =
-        a.works
-        .map(x => {
+                </div>
 
-            return `
-            <div class="item">
+                <div>
+                    🕐 ${record.startTime}
+                    ～ ${record.endTime}
+                </div>
 
-                ${x.date}
-               　
-                ${x.start}
-                –
-                ${x.end}
+                <div>
+                    ⏱️ 工時：
+                    ${formatMinutes(record.minutes)}
+                </div>
 
-                <br>
+                <div>
+                    💰 時薪：
+                    $${Number(record.hourlyRate).toLocaleString()}
+                </div>
 
-                <span class="muted">
+                <div>
+                    💵 應得：
+                    $${Number(record.pay).toLocaleString()}
+                </div>
 
-                    ${Math.floor(x.minutes / 60)}
-                    小時
-
-                    ${x.minutes % 60}
-                    分
-
-                    ＝
-
-                    ${(x.minutes / 60).toFixed(2)}
-                    小時
-
-                </span>
+                <div>
+                    💳 實收：
+                    $${Number(record.actualPay).toLocaleString()}
+                </div>
 
             </div>
-            `;
-
-        })
-        .join('')
-        ||
-        '<p class="muted">尚未加入工作資料</p>';
-
-
-    /* 本月總工時 */
-
-    hours.textContent =
-        h.toFixed(2)
-        +
-        ' 小時';
-
-
-    /* 目前薪資 */
-
-    pay.textContent =
-        '$'
-        +
-        p.toLocaleString();
-
-
-    /* 結算頁 */
-
-    sm.textContent =
-        m;
-
-
-    sh.textContent =
-        h.toFixed(2)
-        +
-        ' 小時';
-
-
-    sp.textContent =
-        '$'
-        +
-        p.toLocaleString();
-
-
-    /* 歷史紀錄 */
-
-    hist.innerHTML =
-
-        Object.keys(
-            db.months
-        )
-        .sort()
-        .reverse()
-        .map(k => {
-
-            let x =
-                db.months[k];
-
-
-            let q =
-                x.works.reduce(
-                    (s,z) =>
-                        s + z.minutes,
-                    0
-                ) / 60;
-
-
-            let pp =
-                Math.round(
-                    q * x.rate
-                );
-
-
-            return `
-            <div class="item">
-
-                <b>${k}</b>
-
-                <br>
-
-                時薪
-                $${x.rate.toLocaleString()}
-
-               　
-                
-                工時
-                ${q.toFixed(2)}
-                小時
-
-                <br>
-
-                應得
-                $${pp.toLocaleString()}
-
-               　
-                
-                實收
-                ${
-                    x.received == null
-                    ? '—'
-                    : '$'
-                    +
-                    Number(
-                        x.received
-                    ).toLocaleString()
-                }
-
-                <br>
-
-                <span class="muted">
-
-                    ${
-                        x.settled
-                        ? '已結算'
-                        : '尚未結算'
-                    }
-
-                </span>
-
-            </div>
-            `;
-
-        })
-        .join('')
-        ||
-        '尚無紀錄';
-
-
-    save();
-
+        `
+        ).join("");
 }
 
 
-/* =====================================
-   加入工作
-===================================== */
+/* =========================
+   手動結算
+========================= */
 
-function addWork() {
+function settleCurrentMonth() {
 
-    let m =
-        durationMin();
+    const month =
+        getCurrentSelectedMonth();
+
+    const result =
+        calculateMonth(month);
 
 
-    if (
-        !date.value ||
-        !start.value ||
-        !end.value
-    ) {
+    if (result.records.length === 0) {
 
-        alert(
-            '請填寫日期、上班時間、下班時間'
-        );
+        alert("這個月份目前沒有資料，無法結算。");
 
         return;
-
     }
 
 
-    let a =
-        current();
-
-
-    a.rate =
-        +rate.value ||
-        a.rate;
-
-
-    if (!a.rate) {
-
-        alert(
-            '請先輸入時薪'
+    const existing =
+        data.settlements.find(
+            item => item.month === month
         );
 
-        return;
 
-    }
+    const settlement = {
 
+        month:
 
-    a.works.push({
+            month,
 
-        date:
-            date.value,
+        totalMinutes:
 
-        start:
-            start.value,
+            result.totalMinutes,
 
-        end:
-            end.value,
+        totalPay:
 
-        minutes:
-            m
+            result.totalPay,
 
-    });
+        totalActual:
 
+            result.totalActual,
 
-    save();
+        count:
 
-    refresh();
+            result.records.length,
 
-}
+        settledAt:
 
+            new Date().toISOString()
 
-/* =====================================
-   本月結算
-===================================== */
-
-function settle() {
-
-    let a =
-        current();
+    };
 
 
-    a.received =
-        received.value === ''
-        ? null
-        : +received.value;
+    if (existing) {
 
-
-    a.settled =
-        true;
-
-
-    save();
-
-    refresh();
-
-
-    alert(
-        '本月已結算並保存。'
-    );
-
-}
-
-
-/* =====================================
-   切換頁面
-===================================== */
-
-function page(id) {
-
-    [
-        'input',
-        'settle',
-        'history'
-    ]
-    .forEach(x => {
-
-        document
-            .getElementById(x)
-            .classList
-            .toggle(
-                'hidden',
-                x !== id
+        const ok =
+            confirm(
+                `${formatMonth(month)} 已經結算過。\n\n要更新這個月份的結算資料嗎？`
             );
 
-    });
-
-
-    [
-        'bn1',
-        'bn2',
-        'bn3'
-    ]
-    .forEach(
-        (x,i) => {
-
-            document
-                .getElementById(x)
-                .classList
-                .toggle(
-                    'on',
-                    [
-                        'input',
-                        'settle',
-                        'history'
-                    ][i]
-                    === id
-                );
-
+        if (!ok) {
+            return;
         }
+
+
+        data.settlements =
+            data.settlements.map(
+                item =>
+                    item.month === month
+                        ? settlement
+                        : item
+            );
+
+    } else {
+
+        data.settlements.push(
+            settlement
+        );
+
+    }
+
+
+    saveData();
+
+    renderAll();
+
+    alert(
+        `${formatMonth(month)} 已完成結算！`
     );
-
-
-    refresh();
-
 }
 
 
-/* =====================================
-   即時更新工時
-===================================== */
+/* =========================
+   刪除月份
+========================= */
 
-start.oninput =
-end.oninput =
-update;
+function deleteMonth(month) {
 
-
-/* =====================================
-   日期改變
-===================================== */
-
-date.onchange =
-refresh;
+    const ok =
+        confirm(
+            `確定要刪除「${formatMonth(month)}」的所有資料嗎？\n\n這個月份的工作紀錄與結算紀錄都會刪除。`
+        );
 
 
-/* =====================================
-   時薪改變
-===================================== */
-
-rate.oninput =
-refresh;
+    if (!ok) {
+        return;
+    }
 
 
-/* =====================================
-   預設今天
-===================================== */
+    data.records =
+        data.records.filter(
+            record =>
+                getMonth(record.date) !== month
+        );
 
-date.value =
-today();
+
+    data.settlements =
+        data.settlements.filter(
+            item =>
+                item.month !== month
+        );
 
 
-/* =====================================
-   開啟程式
-===================================== */
+    saveData();
 
-page('input');
+    renderAll();
+}
+
+
+/* =========================
+   每月結算紀錄
+========================= */
+
+function renderMonthlyRecords() {
+
+    const container =
+        document.getElementById(
+            "monthlyRecords"
+        );
+
+
+    if (data.settlements.length === 0) {
+
+        container.innerHTML =
+            `<div class="empty">
+                尚無已結算的月份
+             </div>`;
+
+        return;
+    }
+
+
+    const settlements =
+        [...data.settlements].sort(
+            (a, b) =>
+                b.month.localeCompare(a.month)
+        );
+
+
+    container.innerHTML =
+        settlements.map(
+            item => `
+
+            <div class="month">
+
+                <div class="monthHeader">
+
+                    <div class="monthTitle">
+                        📅 ${formatMonth(item.month)}
+                    </div>
+
+                    <button
+                        class="deleteMonthBtn"
+                        onclick="deleteMonth('${item.month}')"
+                    >
+                        🗑️ 刪除月份
+                    </button>
+
+                </div>
+
+                <div class="monthInfo">
+
+                    ⏱️ 累計工時：
+                    <strong>
+                        ${formatMinutes(item.totalMinutes)}
+                    </strong>
+
+                    <br>
+
+                    💰 應得薪資：
+                    <strong>
+                        $${Math.round(item.totalPay).toLocaleString()}
+                    </strong>
+
+                    <br>
+
+                    💳 實收金額：
+                    <strong>
+                        $${Math.round(item.totalActual).toLocaleString()}
+                    </strong>
+
+                    <br>
+
+                    📝 工作筆數：
+                    <strong>
+                        ${item.count}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        `
+        ).join("");
+}
+
+
+/* =========================
+   所有畫面重新整理
+========================= */
+
+function renderAll() {
+
+    renderCurrentMonth();
+
+    renderMonthlyRecords();
+
+    updateCalculation();
+}
+
+
+/* =========================
+   日期改變時更新月份
+========================= */
+
+document
+    .getElementById("workDate")
+    .addEventListener(
+        "change",
+        renderCurrentMonth
+    );
+
+
+/* =========================
+   啟動
+========================= */
+
+setDefaultDate();
+
+renderAll();
 
 </script>
 
